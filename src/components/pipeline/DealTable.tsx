@@ -29,11 +29,13 @@ export default function DealTable({ deals, onDealClick }: Props) {
           </tr>
         </thead>
         <tbody>
-          {deals.map((deal, i) => (
+          {deals.map((deal, i) => {
+            const hasDetail = deal.id === 'wise-auto';
+            return (
             <tr
               key={deal.id}
-              onClick={() => onDealClick(deal.id)}
-              className="border-b border-border/50 hover:bg-white/[0.03] cursor-pointer transition-colors animate-fade-in"
+              onClick={() => hasDetail ? onDealClick(deal.id) : undefined}
+              className={`border-b border-border/50 transition-colors animate-fade-in ${hasDetail ? 'hover:bg-white/[0.03] cursor-pointer' : 'opacity-80'}`}
               style={{ animationDelay: `${i * 50}ms` }}
             >
               <td className="px-4 py-3.5 font-medium text-text-primary">{deal.dealer}</td>
@@ -45,7 +47,8 @@ export default function DealTable({ deals, onDealClick }: Props) {
               <td className="px-4 py-3.5 text-center"><StagePill stage={deal.stage} /></td>
               <td className="px-4 py-3.5 text-right text-text-secondary text-xs">{deal.updated}</td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

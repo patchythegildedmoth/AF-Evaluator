@@ -113,13 +113,17 @@ export const dashboardMetrics = [
   { label: 'Model Accuracy', value: '94.3%', subtitle: 'Predicted vs actual (12mo)', trend: 1.8 },
 ];
 
-export const pipelineStages = [
-  { stage: 'Intake', count: 2, color: '#94A3B8' },
-  { stage: 'Scoring', count: 1, color: '#3B82F6' },
-  { stage: 'Pricing', count: 2, color: '#8B5CF6' },
-  { stage: 'Review', count: 1, color: '#F59E0B' },
-  { stage: 'Bid Submitted', count: 1, color: '#10B981' },
+const stageConfig = [
+  { stage: 'Intake', color: '#94A3B8' },
+  { stage: 'Scoring', color: '#3B82F6' },
+  { stage: 'Pricing', color: '#8B5CF6' },
+  { stage: 'Review', color: '#F59E0B' },
+  { stage: 'Bid Submitted', color: '#10B981' },
 ];
+
+export const pipelineStages = stageConfig
+  .map(s => ({ ...s, count: mockDeals.filter(d => d.stage === s.stage).length }))
+  .filter(s => s.count > 0);
 
 export const activityFeed = [
   { time: 'Today 2:14 PM', text: 'Wise Auto Brokers portfolio scored — 142 loans, ENPV: $1,247,300', type: 'success' as const },

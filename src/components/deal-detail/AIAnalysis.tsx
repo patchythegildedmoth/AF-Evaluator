@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Bot, CheckCircle2, AlertTriangle, Shield, Lightbulb } from 'lucide-react';
 
 export default function AIAnalysis() {
+  const [toast, setToast] = useState<string | null>(null);
   return (
     <div className="animate-fade-in max-w-4xl">
       <div className="glass-card rounded-lg p-8 border-l-4 border-l-accent">
@@ -127,9 +129,10 @@ export default function AIAnalysis() {
         <div className="mt-8 pt-4 border-t border-border flex items-center justify-between">
           <span className="text-[10px] text-text-secondary">Generated in 2.4s | Model version 3.2.1 | 142 loans analyzed</span>
           <div className="flex gap-2">
-            <button className="px-3 py-1.5 rounded border border-border text-xs text-text-secondary hover:text-text-primary transition-colors">Export PDF</button>
-            <button className="px-3 py-1.5 rounded border border-border text-xs text-text-secondary hover:text-text-primary transition-colors">Regenerate</button>
+            <button onClick={() => setToast('PDF export — available in production v1')} className="px-3 py-1.5 rounded border border-border text-xs text-text-secondary hover:text-text-primary transition-colors">Export PDF</button>
+            <button onClick={() => setToast('Regenerating analysis — available in production v1')} className="px-3 py-1.5 rounded border border-border text-xs text-text-secondary hover:text-text-primary transition-colors">Regenerate</button>
           </div>
+          {toast && <div className="fixed top-4 right-4 z-50 bg-card border border-border rounded-lg px-4 py-2.5 text-sm text-text-primary shadow-lg animate-fade-in" onAnimationEnd={() => setTimeout(() => setToast(null), 1500)}>{toast}</div>}
         </div>
       </div>
     </div>

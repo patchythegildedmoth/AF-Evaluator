@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { scenarioData } from '../../data/mockChartData';
 
 function fmt(n: number) { return '$' + n.toLocaleString(); }
@@ -39,11 +39,7 @@ export default function StressTesting() {
   const [unemployment, setUnemployment] = useState(4.2);
   const [carIndex, setCarIndex] = useState(100);
   const [interestRate, setInterestRate] = useState(5.5);
-  const [live, setLive] = useState(scenarioData.base);
-
-  useEffect(() => {
-    setLive(interpolateScenarios(unemployment, carIndex, interestRate));
-  }, [unemployment, carIndex, interestRate]);
+  const live = useMemo(() => interpolateScenarios(unemployment, carIndex, interestRate), [unemployment, carIndex, interestRate]);
 
   const scenarios = [
     { label: 'Base Case', data: scenarioData.base, color: 'text-emerald-400' },

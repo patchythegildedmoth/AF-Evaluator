@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, Fragment } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { mockLoans } from '../../data/mockLoans';
@@ -17,7 +17,7 @@ function ExpandedLoanDetail({ loan }: { loan: Loan }) {
 
   return (
     <tr>
-      <td colSpan={10} className="px-6 py-4 bg-base/50">
+      <td colSpan={12} className="px-6 py-4 bg-base/50">
         <div className="grid grid-cols-3 gap-6">
           {/* Mini survival curve */}
           <div>
@@ -88,12 +88,12 @@ export default function LoanTable() {
     }
   };
 
-  const sorted = [...mockLoans].sort((a, b) => {
+  const sorted = useMemo(() => [...mockLoans].sort((a, b) => {
     const av = a[sortKey];
     const bv = b[sortKey];
     if (typeof av === 'number' && typeof bv === 'number') return sortDir === 'asc' ? av - bv : bv - av;
     return sortDir === 'asc' ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
-  });
+  }), [sortKey, sortDir]);
 
   const toggle = (id: number) => {
     const next = new Set(expanded);
@@ -124,7 +124,7 @@ export default function LoanTable() {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key as keyof Loan)}
-                  className={`px-3 py-2.5 text-${col.align} text-[10px] font-medium text-text-secondary uppercase tracking-wider cursor-pointer hover:text-text-primary transition-colors`}
+                  className={`px-3 py-2.5 text-[10px] font-medium text-text-secondary uppercase tracking-wider cursor-pointer hover:text-text-primary transition-colors ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'}`}
                 >
                   {col.label}
                 </th>
@@ -136,9 +136,8 @@ export default function LoanTable() {
               const isExpanded = expanded.has(loan.id);
               const rowBg = loan.riskTier === 'High' ? 'bg-rose-500/[0.03]' : loan.riskTier === 'Low' ? '' : '';
               return (
-                <>
+                <Fragment key={loan.id}>
                   <tr
-                    key={loan.id}
                     onClick={() => toggle(loan.id)}
                     className={`border-b border-border/30 hover:bg-white/[0.03] cursor-pointer transition-colors ${rowBg}`}
                   >
@@ -157,8 +156,8 @@ export default function LoanTable() {
                     <td className="px-3 py-2.5 text-center"><RiskBadge tier={loan.riskTier} /></td>
                     <td className="px-3 py-2.5 text-center"><ConfidenceBadge confidence={loan.confidence} /></td>
                   </tr>
-                  {isExpanded && <ExpandedLoanDetail key={`exp-${loan.id}`} loan={loan} />}
-                </>
+                  {isExpanded && <ExpandedLoanDetail loan={loan} />}
+                </Fragment>
               );
             })}
           </tbody>
