@@ -21,7 +21,7 @@ export default function Header({ title, subtitle }: Props) {
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full" />
         </button>
         <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center text-xs font-medium text-accent">
-          JH
+          FM
         </div>
       </div>
     </header>

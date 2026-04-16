@@ -23,7 +23,7 @@ export const mockDeals: Deal[] = [
     confidence: 'High',
     stage: 'Scoring',
     updated: 'Today',
-    assignedTo: 'Jon Hart',
+    assignedTo: 'Frank Moore',
     submitted: 'Apr 12, 2026',
   },
   {
@@ -49,7 +49,7 @@ export const mockDeals: Deal[] = [
     confidence: 'High',
     stage: 'Bid Submitted',
     updated: 'Yesterday',
-    assignedTo: 'Jon Hart',
+    assignedTo: 'Frank Moore',
     submitted: 'Apr 8, 2026',
   },
   {
@@ -88,7 +88,7 @@ export const mockDeals: Deal[] = [
     confidence: 'High',
     stage: 'Closed/Won',
     updated: 'Apr 5',
-    assignedTo: 'Jon Hart',
+    assignedTo: 'Frank Moore',
     submitted: 'Mar 20, 2026',
   },
   {
